@@ -1,0 +1,58 @@
+<pre>
+<font color="#434f54">&#47;&#47;Act4</font>
+<font color="#5e6d03">#define</font> <font color="#000000">MotA</font> <font color="#000000">10</font> <font color="#434f54">&#47;&#47;se definen pines</font>
+<font color="#5e6d03">#define</font> <font color="#000000">MotB</font> <font color="#000000">11</font>
+<font color="#5e6d03">#define</font> <font color="#000000">A0</font> <font color="#000000">A0</font>
+
+<font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#434f54">&#47;&#47; put your setup code here, to run once:</font>
+ &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">MotA</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; pin del led rojo1 como salida</font>
+ &nbsp;<font color="#d35400">pinMode</font><font color="#000000">(</font><font color="#000000">MotB</font><font color="#434f54">,</font> <font color="#00979c">OUTPUT</font><font color="#000000">)</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; pin del led rojo2 como salida</font>
+ &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">9600</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+
+<font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#434f54">&#47;&#47; put your main code here, to run repeatedly:</font>
+ &nbsp;<font color="#00979c">float</font> <font color="#000000">x</font> <font color="#434f54">=</font> <font color="#d35400">analogRead</font><font color="#000000">(</font><font color="#000000">A0</font><font color="#000000">)</font><font color="#434f54">&#47;</font><font color="#000000">204.6</font><font color="#000000">;</font>
+ &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#005c5f">&#34;Potenciometro: &#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#000000">x</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#00979c">int</font> <font color="#000000">y</font> <font color="#434f54">=</font> <font color="#d35400">map</font><font color="#000000">(</font><font color="#000000">x</font><font color="#434f54">,</font> <font color="#000000">0</font><font color="#434f54">,</font> <font color="#000000">5</font><font color="#434f54">,</font> <font color="#000000">0</font><font color="#434f54">,</font> <font color="#000000">255</font><font color="#000000">)</font><font color="#000000">;</font>
+
+ &nbsp;<font color="#5e6d03">if</font><font color="#000000">(</font><font color="#000000">x</font> <font color="#434f54">&gt;=</font> <font color="#000000">0</font> <font color="#434f54">&amp;&amp;</font> <font color="#000000">x</font> <font color="#434f54">&lt;=</font> <font color="#000000">2</font><font color="#000000">)</font><font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">levogiro</font><font color="#000000">(</font><font color="#000000">y</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font> <font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">x</font> <font color="#434f54">&gt;</font> <font color="#000000">2</font> <font color="#434f54">&amp;&amp;</font> <font color="#000000">x</font> <font color="#434f54">&lt;</font> <font color="#000000">3</font><font color="#000000">)</font><font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">frenoP</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font> <font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">x</font> <font color="#434f54">&gt;=</font> <font color="#000000">3</font> <font color="#434f54">&amp;&amp;</font> <font color="#000000">x</font> <font color="#434f54">&lt;=</font> <font color="#000000">5</font><font color="#000000">)</font><font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">dextrogiro</font><font color="#000000">(</font><font color="#000000">y</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">}</font>
+ &nbsp;
+ <font color="#000000">}</font>
+
+<font color="#00979c">void</font> <font color="#000000">levogiro</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">y</font><font color="#000000">)</font><font color="#000000">{</font>
+ &nbsp;&nbsp;<font color="#434f54">&#47;&#47;Mandamos 1 y 0</font>
+ &nbsp;&nbsp;&nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">MotA</font><font color="#434f54">,</font> <font color="#000000">255</font> <font color="#434f54">-</font> <font color="#000000">y</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">MotB</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#005c5f">&#34;Levogiro: &#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#000000">MotA</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#000000">MotB</font><font color="#000000">)</font><font color="#000000">;</font>
+ <font color="#000000">}</font>
+
+ <font color="#00979c">void</font> <font color="#000000">frenoP</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">{</font>
+ &nbsp;<font color="#434f54">&#47;&#47;Mandamos 0 y 0</font>
+ &nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">MotA</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">MotB</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#005c5f">&#34;Freno pasivo: &#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#000000">MotA</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#000000">MotB</font><font color="#000000">)</font><font color="#000000">;</font>
+ <font color="#000000">}</font>
+
+ <font color="#00979c">void</font> <font color="#000000">dextrogiro</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">y</font><font color="#000000">)</font><font color="#000000">{</font>
+ &nbsp;&nbsp;<font color="#434f54">&#47;&#47;Mandamos 0 y 1</font>
+ &nbsp;&nbsp;&nbsp;<font color="#d35400">digitalWrite</font><font color="#000000">(</font><font color="#000000">MotA</font><font color="#434f54">,</font> <font color="#00979c">LOW</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#d35400">analogWrite</font><font color="#000000">(</font><font color="#000000">MotB</font><font color="#434f54">,</font> <font color="#000000">y</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#005c5f">&#34;dextrogiro: &#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#000000">MotA</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#000000">MotB</font><font color="#000000">)</font><font color="#000000">;</font>
+ <font color="#000000">}</font>
+
+</pre>
